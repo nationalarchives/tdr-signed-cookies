@@ -50,7 +50,7 @@ class TestStringMethods(TestCase):
 
     def setUp(self):
         self.mock_kms.start()
-        kms = boto3.client("kms")
+        kms = boto3.client("kms", region_name='eu-west-2')
         kms_key = kms.create_key(
             Policy='string',
             Description='string',
@@ -63,7 +63,7 @@ class TestStringMethods(TestCase):
         os.environ['AWS_SECRET_ACCESS_KEY'] = 'testing'
         os.environ['AWS_SECURITY_TOKEN'] = 'testing'
         os.environ['AWS_SESSION_TOKEN'] = 'testing'
-        os.environ['AWS_REGION'] = 'eu-west-2'
+        os.environ['AWS_DEFAULT_REGION'] = 'eu-west-2'
 
     def test_unauthorised_for_invalid_token(self):
         event = {
