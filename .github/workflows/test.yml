@@ -10,11 +10,11 @@ permissions:
   contents: read
 jobs:
   test:
-    uses: nationalarchives/tdr-github-actions/.github/workflows/tdr_test.yml@main
+    uses: nationalarchives/tdr-github-actions/.github/workflows/tdr_test.yml@add-set-python-version
     with:
       repo-name: tdr-antivirus
       test-command: |
-        python3.9 -m venv venv
+        python -m venv venv
         source venv/bin/activate
         pip install -r requirements.txt
         python -m unittest
