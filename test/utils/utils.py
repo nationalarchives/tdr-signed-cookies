@@ -108,6 +108,9 @@ def set_up(kms, httpserver):
     os.environ["AWS_LAMBDA_FUNCTION_NAME"] = "test-function-name"
     os.environ["KEY_PAIR_ID"] = encrypt(kms_key, kms, "key-pair-id")
     os.environ["PRIVATE_KEY"] = encrypt(kms_key, kms, private_key())
+    os.environ['AWS_ACCESS_KEY_ID'] = 'testing'
+    os.environ['AWS_SECRET_ACCESS_KEY'] = 'testing'
+    os.environ['AWS_DEFAULT_REGION'] = 'eu-west-2'
 
 
 def decode_string(cookie_string):
