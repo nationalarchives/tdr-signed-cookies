@@ -22,6 +22,7 @@ jobs:
         zip -r ../function.zip .
         cd ..
         zip -g function.zip signed_cookies.py
+        cd ..
     secrets:
       MANAGEMENT_ACCOUNT: ${{ secrets.MANAGEMENT_ACCOUNT }}
       WORKFLOW_PAT: ${{ secrets.WORKFLOW_PAT }}
