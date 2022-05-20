@@ -1,6 +1,8 @@
 import time
 import json
 import base64
+import traceback
+
 import jwt
 from jwt import PyJWKClient
 import boto3
@@ -14,7 +16,7 @@ from cryptography.hazmat.primitives.asymmetric import padding
 
 
 def thirty_minutes():
-    int(time.time()) + (60 * 30)
+    return int(time.time()) + (60 * 30)
 
 
 def _replace_unsupported_chars(some_str):
@@ -70,7 +72,8 @@ def decode(env_var_name):
 def user_id_from_token(token, url):
     jwks_client = PyJWKClient(f"{url}/realms/tdr/protocol/openid-connect/certs")
     signing_key = jwks_client.get_signing_key_from_jwt(token)
-    payload = jwt.decode(token, signing_key.key, audience="tdr-fe", algorithms=["RS256"])
+    options = {"verify_exp": True, "verify_signature": True}
+    payload = jwt.decode(token, signing_key.key, audience="tdr", algorithms=["RS256"], options=options)
     return payload["user_id"]
 
 
@@ -79,12 +82,12 @@ def sign_cookies(event):
     token = headers["Authorization"].removeprefix("Bearer ")
     origin = headers["Origin"] if "Origin" in headers else headers["origin"]
 
-    environment = decode("ENVIRONMENT")
+    environment = os.environ["ENVIRONMENT"]
     key_pair_id = decode("KEY_PAIR_ID")
     private_key = b64decode(decode("PRIVATE_KEY"))
 
     subdomain = f"tdr-{environment}.nationalarchives.gov.uk"
-    auth_url = f"https://auth.{subdomain}/auth"
+    auth_url = os.environ["AUTH_URL"]
     upload_domain = f"upload.{subdomain}"
     frontend_url = f"https://{subdomain}"
     user_id = user_id_from_token(token, auth_url)
@@ -122,10 +125,12 @@ def generate_signed_cookies(url, key, key_pair_id):
     }
 
 
+# noinspection PyBroadException
 def handler(event, context):
     try:
         return sign_cookies(event)
     except Exception:
+        traceback.print_exc()
         return {
             "statusCode": 401
         }
