@@ -1,4 +1,4 @@
-name: TDR Signed Cookies Lambda
+name: TDR Deploy Signed Cookies Lambda
 on:
   workflow_dispatch:
     inputs:
