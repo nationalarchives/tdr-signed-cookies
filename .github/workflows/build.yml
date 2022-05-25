@@ -15,14 +15,9 @@ jobs:
       artifact-path: lambda
       build-command: |
         mkdir lambda
-        cd lambda
-        cp ../src/signed_cookies.py .
-        pip install --target ./package -r ../requirements-runtime.txt
-        cd package
-        zip -r ../function.zip .
-        cd ..
-        zip -g function.zip signed_cookies.py
-        cd ..
+        docker build -t function .
+        docker run -itd --rm --name function function
+        docker cp function:/lambda/function.zip lambda/
     secrets:
       MANAGEMENT_ACCOUNT: ${{ secrets.MANAGEMENT_ACCOUNT }}
       WORKFLOW_PAT: ${{ secrets.WORKFLOW_PAT }}
