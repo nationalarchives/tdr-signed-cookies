@@ -3,7 +3,6 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - create-signed-cookies-lambda
       - master
 jobs:
   pre-deploy:
@@ -26,6 +25,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: gh workflow run deploy.yml -f environment=intg -f to-deploy=${{ needs.pre-deploy.outputs.next-version }} --ref create-signed-cookies-lambda
+      - run: gh workflow run deploy.yml -f environment=intg -f to-deploy=${{ needs.pre-deploy.outputs.next-version }}
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}

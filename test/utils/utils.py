@@ -55,7 +55,7 @@ token_private_key = token_keys["private"]
 
 def get_token(user_id=None, expiry=None):
     expiry = math.ceil(time.time()) + 3600 if expiry is None else expiry
-    base_payload = {"aud": "tdr", "exp": expiry}
+    base_payload = {"aud": "tdr-fe", "exp": expiry}
     payload = {"user_id": user_id} | base_payload if user_id is not None else base_payload
     return jwt.encode(payload, token_private_key, algorithm="RS256", headers={"kid": "kid"})
 
