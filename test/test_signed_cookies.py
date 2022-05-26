@@ -69,7 +69,7 @@ def test_create_cookie_policy(kms, httpserver: HTTPServer):
     expected_time = mock_time_return_value + (60 * 30)
     token_expiry_time = math.ceil(current_time) + 3600
     user_id = str(uuid.uuid4())
-    url = f"https://upload.tdr-integration.nationalarchives.gov.uk/{user_id}/*"
+    url = f"https://upload.example.com/{user_id}/*"
     set_up(kms, httpserver)
     token = get_token(user_id=user_id, expiry=token_expiry_time)
     event = get_event(token)
