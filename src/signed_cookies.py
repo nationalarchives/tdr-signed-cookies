@@ -86,10 +86,9 @@ def sign_cookies(event):
     key_pair_id = decode("KEY_PAIR_ID")
     private_key = b64decode(decode("PRIVATE_KEY"))
 
-    subdomain = f"tdr-{environment}.nationalarchives.gov.uk"
     auth_url = os.environ["AUTH_URL"]
-    upload_domain = f"upload.{subdomain}"
-    frontend_url = f"https://{subdomain}"
+    upload_domain = os.environ["UPLOAD_DOMAIN"]
+    frontend_url = os.environ["FRONTEND_URL"]
     user_id = user_id_from_token(token, auth_url)
     cookies = generate_signed_cookies(f"https://{upload_domain}/{user_id}/*", private_key, key_pair_id)
     return generate_response(cookies, environment, frontend_url, origin)
