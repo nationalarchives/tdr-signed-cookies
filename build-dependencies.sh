@@ -1,18 +1,17 @@
 #!/bin/bash
-
-yum update -y
-yum install -y python3-pip python3-devel
+yum install -y wget zip
+amazon-linux-extras install python3.8
+python3.8 -m ensurepip --upgrade
 
 mkdir /pip
-pip3 install --requirement requirements.txt --target /pip
+pip3.8 install --requirement requirements.txt --target /pip
 
 cd /pip
-rm -r *.dist-info *.egg-info
+rm -r *.dist-info
 find . -name __pycache__ | xargs rm -r
-mv _cffi_backend.cpython-37m-x86_64-linux-gnu.so _cffi_backend.so
+mv  _cffi_backend.cpython-38-x86_64-linux-gnu.so _cffi_backend.so
 cd cryptography/hazmat/bindings
 mv _openssl.abi3.so _openssl.so
-mv _padding.abi3.so _padding.so
 
 mkdir /lambda
 cp -r /pip/* /lambda

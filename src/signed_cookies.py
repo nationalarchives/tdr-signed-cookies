@@ -73,13 +73,13 @@ def user_id_from_token(token, url):
     jwks_client = PyJWKClient(f"{url}/realms/tdr/protocol/openid-connect/certs")
     signing_key = jwks_client.get_signing_key_from_jwt(token)
     options = {"verify_exp": True, "verify_signature": True}
-    payload = jwt.decode(token, signing_key.key, audience="tdr", algorithms=["RS256"], options=options)
+    payload = jwt.decode(token, signing_key.key, audience="tdr-fe", algorithms=["RS256"], options=options)
     return payload["user_id"]
 
 
 def sign_cookies(event):
     headers = event["headers"]
-    token = headers["Authorization"].removeprefix("Bearer ")
+    token = headers["Authorization"].split(" ")[1]
     origin = headers["Origin"] if "Origin" in headers else headers["origin"]
 
     environment = os.environ["ENVIRONMENT"]
