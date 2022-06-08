@@ -12,7 +12,7 @@ jobs:
   test:
     uses: nationalarchives/tdr-github-actions/.github/workflows/tdr_test.yml@add-set-python-version
     with:
-      repo-name: tdr-antivirus
+      repo-name: tdr-signed-cookies
       test-command: |
         python -m venv venv
         source venv/bin/activate
