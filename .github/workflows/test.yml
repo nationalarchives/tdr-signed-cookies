@@ -10,7 +10,7 @@ permissions:
   contents: read
 jobs:
   test:
-    uses: nationalarchives/tdr-github-actions/.github/workflows/tdr_test.yml@add-set-python-version
+    uses: nationalarchives/tdr-github-actions/.github/workflows/tdr_test.yml@main
     with:
       repo-name: tdr-signed-cookies
       test-command: |
