@@ -5,6 +5,7 @@ python3.9 -m ensurepip --upgrade
 
 mkdir /pip
 pip3.9 install --requirement requirements.txt --target /pip
+pip3.9 install --platform manylinux2010_x86_64 --implementation cp --python 3.9 --only-binary=:all: --upgrade --target awsbundle cryptography
 
 cd /pip
 rm -r *.dist-info
