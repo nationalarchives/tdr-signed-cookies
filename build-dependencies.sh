@@ -1,10 +1,10 @@
 #!/bin/bash
 dnf install -y wget zip
-dnf install -y python3.11
-python3.11 -m ensurepip --upgrade
+dnf install -y python3.9
+python3.9 -m ensurepip --upgrade
 
 mkdir /pip
-pip3.11 install --requirement requirements.txt --target /pip
+pip3.9 install --requirement requirements.txt --target /pip
 
 cd /pip
 rm -r *.dist-info
