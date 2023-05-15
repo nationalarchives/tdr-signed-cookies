@@ -1,6 +1,6 @@
 #!/bin/bash
 dnf install -y wget zip
-dnf install python3.11
+dnf install -y python3.11
 python3.11 -m ensurepip --upgrade
 
 mkdir /pip
