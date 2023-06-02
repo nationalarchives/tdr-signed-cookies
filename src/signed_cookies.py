@@ -15,8 +15,8 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 
 
-def thirty_minutes():
-    return int(time.time()) + (60 * 30)
+def sixty_minutes():
+    return int(time.time()) + (60 * 60)
 
 
 def _replace_unsupported_chars(some_str):
@@ -42,7 +42,7 @@ def generate_policy_cookie(url):
                 "Resource": url,
                 "Condition": {
                     "DateLessThan": {
-                        "AWS:EpochTime": thirty_minutes()
+                        "AWS:EpochTime": sixty_minutes()
                     }
                 }
             }

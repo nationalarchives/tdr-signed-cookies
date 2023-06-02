@@ -66,7 +66,7 @@ def test_access_control_origin(environment, origin, allowed_origin, frontend_url
 
 @patch('time.time', mock_time)
 def test_create_cookie_policy(kms, httpserver: HTTPServer):
-    expected_time = mock_time_return_value + (60 * 30)
+    expected_time = mock_time_return_value + (60 * 60)
     token_expiry_time = math.ceil(current_time) + 3600
     user_id = str(uuid.uuid4())
     url = f"https://upload.example.com/{user_id}/*"
