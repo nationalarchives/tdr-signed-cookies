@@ -113,6 +113,7 @@ def set_up(kms, httpserver):
     os.environ['AWS_ACCESS_KEY_ID'] = 'testing'
     os.environ['AWS_SECRET_ACCESS_KEY'] = 'testing'
     os.environ['AWS_DEFAULT_REGION'] = 'eu-west-2'
+    os.environ['COOKIE_EXPIRY_MINUTES'] = '60'
 
 
 def decode_string(cookie_string):

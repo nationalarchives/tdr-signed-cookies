@@ -15,8 +15,9 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 
 
-def sixty_minutes():
-    return int(time.time()) + (60 * 60)
+def cookie_expiry():
+    expiry_mins = os.environ["COOKIE_EXPIRY_MINUTES"]
+    return int(time.time()) + (60 * int(expiry_mins))
 
 
 def _replace_unsupported_chars(some_str):
@@ -42,7 +43,7 @@ def generate_policy_cookie(url):
                 "Resource": url,
                 "Condition": {
                     "DateLessThan": {
-                        "AWS:EpochTime": sixty_minutes()
+                        "AWS:EpochTime": cookie_expiry()
                     }
                 }
             }
