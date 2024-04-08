@@ -4,7 +4,8 @@ from unittest.mock import patch
 
 import boto3
 import pytest
-from moto import mock_kms
+# from moto import mock_kms
+from moto import mock_aws
 from pytest_httpserver import HTTPServer
 from utils.utils import *
 
@@ -13,7 +14,7 @@ from src import signed_cookies
 
 @pytest.fixture(scope='function')
 def kms():
-    with mock_kms():
+    with mock_aws():
         yield boto3.client('kms', region_name='eu-west-2')
 
 
