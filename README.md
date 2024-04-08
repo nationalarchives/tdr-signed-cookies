@@ -34,7 +34,6 @@ The expected response will be `{"statusCode":401,"headers":null,"multiValueHeade
 
 ## Running the tests locally.
 You can run the tests from your terminal using a Python virtual environment.
-
 ```bash
     python -m venv venv
     source venv/bin/activate
