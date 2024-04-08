@@ -4,7 +4,6 @@ from unittest.mock import patch
 
 import boto3
 import pytest
-# from moto import mock_kms
 from moto import mock_aws
 from pytest_httpserver import HTTPServer
 from utils.utils import *
