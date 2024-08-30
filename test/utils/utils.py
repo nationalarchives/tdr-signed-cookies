@@ -15,6 +15,13 @@ mock_time = Mock()
 mock_time_return_value = 123456
 mock_time.return_value = mock_time_return_value
 
+localhost_domain = "http://localhost:9000"
+integration_frontend_domain = "https://tdr-integration.nationalarchives.gov.uk"
+staging_frontend_domain = "https://tdr-staging.nationalarchives.gov.uk"
+production_frontend_domain = "https://tdr.nationalarchives.gov.uk"
+sharepoint_domain = "https://sub-domain.sharepoint.com/sites/some-site"
+another_domain = "https://another-domain.com"
+
 
 def get_event(token):
     return {
@@ -53,9 +60,9 @@ token_keys = get_token_keys()
 token_private_key = token_keys["private"]
 
 
-def get_token(user_id=None, expiry=None):
+def get_token(user_id=None, expiry=None, audience="tdr-fe"):
     expiry = math.ceil(time.time()) + 3600 if expiry is None else expiry
-    base_payload = {"aud": "tdr-fe", "exp": expiry}
+    base_payload = {"aud": audience, "exp": expiry}
     payload = {"user_id": user_id, **base_payload} if user_id is not None else base_payload
     return jwt.encode(payload, token_private_key, algorithm="RS256", headers={"kid": "kid"})
 
@@ -124,19 +131,28 @@ def decode_string(cookie_string):
     return json.loads(decoded_string)
 
 
-def origin_test_values():
-    localhost = "http://localhost:9000"
-    integration = "https://tdr-integration.nationalarchives.gov.uk"
-    staging = "https://tdr-staging.nationalarchives.gov.uk"
-    production = "https://tdr.nationalarchives.gov.uk"
-    another_domain = "https://another-domain.com"
-
+def audience_test_values():
     return [
-        ("integration", localhost, localhost, integration),
-        ("integration", integration, integration, integration),
-        ("integration", another_domain, integration, integration),
-        ("staging", staging, staging, staging),
-        ("staging", another_domain, staging, staging),
-        ("production", production, production, production),
-        ("production", another_domain, production, production)
+        (localhost_domain, "tdr-fe"),
+        (integration_frontend_domain, "tdr-fe"),
+        (staging_frontend_domain, "tdr-fe"),
+        (production_frontend_domain, "tdr-fe"),
+        (sharepoint_domain, "tdr-sharepoint"),
+        (another_domain, "tdr-fe")
+    ]
+
+
+def origin_test_values():
+    return [
+        # environment, origin, allowed origin, tdr frontend url
+        ("integration", localhost_domain, localhost_domain, integration_frontend_domain),
+        ("integration", integration_frontend_domain, integration_frontend_domain, integration_frontend_domain),
+        ("integration", sharepoint_domain, sharepoint_domain, integration_frontend_domain),
+        ("integration", another_domain, integration_frontend_domain, integration_frontend_domain),
+        ("staging", staging_frontend_domain, staging_frontend_domain, staging_frontend_domain),
+        ("staging", sharepoint_domain, sharepoint_domain, staging_frontend_domain),
+        ("staging", another_domain, staging_frontend_domain, staging_frontend_domain),
+        ("production", production_frontend_domain, production_frontend_domain, production_frontend_domain),
+        ("production", sharepoint_domain, sharepoint_domain, staging_frontend_domain),
+        ("production", another_domain, production_frontend_domain, production_frontend_domain)
     ]

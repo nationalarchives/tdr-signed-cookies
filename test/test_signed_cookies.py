@@ -17,6 +17,23 @@ def kms():
         yield boto3.client('kms', region_name='eu-west-2')
 
 
+sharepoint_origin = "https://some-subdomain.sharepoint.com/something/else"
+non_sharepoint_origin = "https://tdr.nationalarchives.gov.uk"
+
+
+def test_sharepoint_domain():
+    sharepoint_result = signed_cookies.sharepoint_domain(sharepoint_origin)
+    non_sharepoint_result = signed_cookies.sharepoint_domain(non_sharepoint_origin)
+    assert sharepoint_result == True
+    assert non_sharepoint_result == False
+
+
+@pytest.mark.parametrize("origin, audience", audience_test_values())
+def test_get_audience(origin, audience):
+    result = signed_cookies.get_audience(origin)
+    assert result == audience
+
+
 def test_unauthorised_for_invalid_token(kms, httpserver: HTTPServer):
     set_up(kms, httpserver)
     event = get_event("invalid_token")
