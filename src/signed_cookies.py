@@ -92,6 +92,7 @@ def user_id_from_token(token, url, origin):
     audience = get_audience(origin)
     jwks_client = PyJWKClient(f"{url}/realms/tdr/protocol/openid-connect/certs")
     signing_key = jwks_client.get_signing_key_from_jwt(token)
+    print(f"Signing key: {signing_key}")
     options = {"verify_exp": True, "verify_signature": True}
     payload = jwt.decode(token, signing_key.key, audience=audience, algorithms=["RS256"], options=options)
     return payload["user_id"]
@@ -102,6 +103,7 @@ def sign_cookies(event):
     token = headers["Authorization"].split(" ")[1]
     origin = headers["Origin"] if "Origin" in headers else headers["origin"]
 
+
     environment = os.environ["ENVIRONMENT"]
     key_pair_id = decode("KEY_PAIR_ID")
     private_key = b64decode(decode("PRIVATE_KEY"))
@@ -109,6 +111,7 @@ def sign_cookies(event):
     auth_url = os.environ["AUTH_URL"]
     upload_domain = os.environ["UPLOAD_DOMAIN"]
     frontend_url = os.environ["FRONTEND_URL"]
+    print(f"getting user token: token = {token}, origin = {origin}, {auth_url}")
     user_id = user_id_from_token(token, auth_url, origin)
     cookies = generate_signed_cookies(f"https://{upload_domain}/{user_id}/*", private_key, key_pair_id)
     return generate_response(cookies, environment, frontend_url, origin)
@@ -121,7 +124,8 @@ def generate_response(cookies, environment, frontend_url, origin):
         "statusCode": 200,
         "headers": {
             "Access-Control-Allow-Origin": allowed_origin,
-            "Access-Control-Allow-Credentials": "true"
+            "Access-Control-Allow-Credentials": "true",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
         },
         "multiValueHeaders": {
             "Set-Cookie": [
@@ -147,6 +151,7 @@ def generate_signed_cookies(url, key, key_pair_id):
 # noinspection PyBroadException
 def handler(event, context):
     try:
+        print("Running signed cookies Lambda")
         return sign_cookies(event)
     except Exception:
         traceback.print_exc()

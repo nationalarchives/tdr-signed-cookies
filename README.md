@@ -24,9 +24,9 @@ This is built using GitHub actions in the `.github/workflows/build.yml` file.
 ## Running Locally
 There is a `signed_cookies_runner` file with some example json. To run this, you will need to set the environment variables to the same values as the integration lambda. You can get these by running this command with integration credentials
 
-`aws lambda get-function --function-name tdr-sign-cookies-intg --query  'Configuration.Environment.Variables'`  
+`aws lambda get-function --function-name tdr-signed-cookies-intg --query  'Configuration.Environment.Variables'`  
 
-You will also need to set an environment variable called `AWS_LAMBDA_FUNCTION_NAME` with the value `tdr-sign-cookies-intg` This is set automatically by the lambda but has to be set manually here.
+You will also need to set an environment variable called `AWS_LAMBDA_FUNCTION_NAME` with the value `tdr-signed-cookies-intg` This is set automatically by the lambda but has to be set manually here.
 
 You will need to make sure that you have integration credentials set before running `LambdaRunner`, either by setting them in `~/.aws/credentials` or by setting environment variables in the run configuration. You will need permissions to access KMS keys for this to work.
 

@@ -80,6 +80,13 @@ def test_access_control_origin(environment, origin, allowed_origin, frontend_url
     response = signed_cookies.generate_response(cookies, environment, frontend_url, origin)
     assert allowed_origin == response["headers"]["Access-Control-Allow-Origin"]
 
+@pytest.mark.parametrize("environment, origin, allowed_origin, frontend_url", origin_test_values())
+def test_header_reponse_values(environment, origin, allowed_origin, frontend_url, kms, httpserver: HTTPServer):
+    set_up(kms, httpserver)
+    cookies = {"signature": "test_signature", "policy": "test_policy", "key_pair_id": "test_key_pair_id"}
+    response = signed_cookies.generate_response(cookies, environment, frontend_url, origin)
+    assert "true" == response["headers"]["Access-Control-Allow-Credentials"]
+    assert "max-age=31536000; includeSubDomains" == response["headers"]["Strict-Transport-Security"]
 
 @patch('time.time', mock_time)
 def test_create_cookie_policy(kms, httpserver: HTTPServer):
