@@ -122,7 +122,6 @@ def generate_response(cookies, environment, frontend_url, origin):
         "headers": {
             "Access-Control-Allow-Origin": allowed_origin,
             "Access-Control-Allow-Credentials": "true",
-            "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
         },
         "multiValueHeaders": {
             "Set-Cookie": [

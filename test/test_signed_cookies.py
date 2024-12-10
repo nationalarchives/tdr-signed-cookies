@@ -86,7 +86,6 @@ def test_header_response_values(environment, origin, allowed_origin, frontend_ur
     cookies = {"signature": "test_signature", "policy": "test_policy", "key_pair_id": "test_key_pair_id"}
     response = signed_cookies.generate_response(cookies, environment, frontend_url, origin)
     assert "true" == response["headers"]["Access-Control-Allow-Credentials"]
-    assert "max-age=31536000; includeSubDomains" == response["headers"]["Strict-Transport-Security"]
 
 @patch('time.time', mock_time)
 def test_create_cookie_policy(kms, httpserver: HTTPServer):
