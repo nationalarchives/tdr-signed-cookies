@@ -9,6 +9,7 @@ jobs:
     uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@main
     with:
       repo-name: tdr-signed-cookies
+      lambda-name: signed-cookies
       artifact-name: function
       artifact-file-type: zip
       artifact-path: lambda
