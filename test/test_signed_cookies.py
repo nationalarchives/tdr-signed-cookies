@@ -86,6 +86,8 @@ def test_header_response_values(environment, origin, allowed_origin, frontend_ur
     cookies = {"signature": "test_signature", "policy": "test_policy", "key_pair_id": "test_key_pair_id"}
     response = signed_cookies.generate_response(cookies, environment, frontend_url, origin)
     assert "true" == response["headers"]["Access-Control-Allow-Credentials"]
+    assert "default-src 'self'" == response["headers"]["Content-Security-Policy"]
+    assert "none" == response["headers"]["X-Permitted-Cross-Domain-Policies"]
 
 @patch('time.time', mock_time)
 def test_create_cookie_policy(kms, httpserver: HTTPServer):
