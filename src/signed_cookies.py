@@ -82,7 +82,7 @@ def get_audience(origin):
 
 
 def get_allowed_origin(origin, environment, frontend_url):
-    if sharepoint_domain(origin) or (environment == "integration" and origin == "http://localhost:9000"):
+    if sharepoint_domain(origin) or (environment == "integration" and origin == "https://app.tdr-local.nationalarchives.gov.uk:9000"):
         return origin
     else:
         return frontend_url

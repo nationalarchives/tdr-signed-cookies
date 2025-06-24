@@ -15,7 +15,7 @@ mock_time = Mock()
 mock_time_return_value = 123456
 mock_time.return_value = mock_time_return_value
 
-localhost_domain = "http://localhost:9000"
+local_development_domain = "https://app.tdr-local.nationalarchives.gov.uk:9000"
 integration_frontend_domain = "https://tdr-integration.nationalarchives.gov.uk"
 staging_frontend_domain = "https://tdr-staging.nationalarchives.gov.uk"
 production_frontend_domain = "https://tdr.nationalarchives.gov.uk"
@@ -133,7 +133,7 @@ def decode_string(cookie_string):
 
 def audience_test_values():
     return [
-        (localhost_domain, "tdr-fe"),
+        (local_development_domain, "tdr-fe"),
         (integration_frontend_domain, "tdr-fe"),
         (staging_frontend_domain, "tdr-fe"),
         (production_frontend_domain, "tdr-fe"),
@@ -145,7 +145,7 @@ def audience_test_values():
 def origin_test_values():
     return [
         # environment, origin, allowed origin, tdr frontend url
-        ("integration", localhost_domain, localhost_domain, integration_frontend_domain),
+        ("integration", local_development_domain, local_development_domain, integration_frontend_domain),
         ("integration", integration_frontend_domain, integration_frontend_domain, integration_frontend_domain),
         ("integration", sharepoint_domain, sharepoint_domain, integration_frontend_domain),
         ("integration", another_domain, integration_frontend_domain, integration_frontend_domain),
