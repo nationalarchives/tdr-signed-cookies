@@ -7,7 +7,7 @@ mkdir /pip
 python3.11 -m pip install --upgrade pip
 pip3.11 install --requirement requirements.txt --target /pip
 python3.11 -m pip install setuptools_rust
-pip3.11 install --platform manylinux2010_x86_64 --implementation cp --python 3.11 --only-binary=:all: --upgrade --target /pip cryptography
+pip3.11 install --platform manylinux2010_x86_64 --implementation cp --only-binary=:all: --upgrade --target /pip cryptography
 
 cd /pip
 rm -r *.dist-info
