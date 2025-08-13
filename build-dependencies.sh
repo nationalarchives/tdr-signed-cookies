@@ -1,11 +1,11 @@
 #!/bin/bash
 dnf install -y wget zip
-dnf install -y python3.9
-python3.9 -m ensurepip --upgrade
+dnf install -y python3.13
+python3.13 -m ensurepip --upgrade
 
 mkdir /pip
-pip3.9 install --requirement requirements.txt --target /pip
-pip3.9 install --platform manylinux2010_x86_64 --implementation cp --python 3.9 --only-binary=:all: --upgrade --target /pip cryptography
+pip3.13 install --requirement requirements.txt --target /pip
+pip3.13 install --platform manylinux2010_x86_64 --implementation cp --python 3.13 --only-binary=:all: --upgrade --target /pip cryptography
 
 cd /pip
 rm -r *.dist-info
