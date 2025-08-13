@@ -6,7 +6,7 @@ python3.11 -m ensurepip --upgrade
 mkdir /pip
 python3.11 -m pip install --upgrade pip
 pip3.11 install --requirement requirements.txt --target /pip
-python3.11 -m pip install setuptools_rust
+#python3.11 -m pip install setuptools_rust
 python3.11 -m pip install --platform manylinux2010_x86_64 --implementation cp --only-binary=:all: --upgrade --target /pip cryptography
 
 cd /pip
