@@ -6,7 +6,7 @@ python3.13 -m ensurepip --upgrade
 mkdir /pip
 python3.13 -m pip install --upgrade pip
 pip3.13 install --requirement requirements.txt --target /pip
-python3.13 -m pip install --platform manylinux2014_x86_64 --implementation cp --only-binary=:all: --upgrade --target /pip cryptography==37.0.4
+python3.13 -m pip install --platform manylinux2014_x86_64 --implementation cp --only-binary=:all: --upgrade --target /pip cryptography==43.0.1
 
 cd /pip
 rm -r *.dist-info
