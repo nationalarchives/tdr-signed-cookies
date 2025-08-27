@@ -7,9 +7,12 @@ mkdir /pip
 python3.11 -m pip install --upgrade pip
 pip3.11 install --requirement requirements.txt --target /pip
 
-python3.11 -m pip install --target /pip setuptools_rust --upgrade
-python3.11 -m pip install --platform manylinux2014_x86_64 --implementation cp --only-binary=:all: --upgrade --target /pip cryptography
-python3.11 -m pip install --target /pip pyopenssl==22.1.0 --upgrade
+#python3.11 -m pip install --target /pip setuptools_rust --upgrade
+#python3.11 -m pip install --platform manylinux2014_x86_64 --implementation cp --only-binary=:all: --upgrade --target /pip cryptography
+#python3.11 -m pip install --target /pip pyopenssl==22.1.0 --upgrade
+
+python3.11 -m pip install --platform manylinux2014_x86_64 --implementation cp --only-binary=:all: --upgrade --target /pip cryptography==37.0.4
+
 
 cd /pip
 rm -r *.dist-info
