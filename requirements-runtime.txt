@@ -1,4 +1,3 @@
 cryptography==37.0.4
 pyjwt
 cffi
-pyopenssl==22.1.0
