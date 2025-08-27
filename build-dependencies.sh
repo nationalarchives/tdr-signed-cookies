@@ -1,24 +1,18 @@
 #!/bin/bash
 dnf install -y wget zip
-dnf install -y python3.11
-python3.11 -m ensurepip --upgrade
+dnf install -y python3.13 nano
+python3.13 -m ensurepip --upgrade
 
 mkdir /pip
-python3.11 -m pip install --upgrade pip
-pip3.11 install --requirement requirements.txt --target /pip
-
-#python3.11 -m pip install --target /pip setuptools_rust --upgrade
-#python3.11 -m pip install --platform manylinux2014_x86_64 --implementation cp --only-binary=:all: --upgrade --target /pip cryptography
-#python3.11 -m pip install --target /pip pyopenssl==22.1.0 --upgrade
-
-python3.11 -m pip install --platform manylinux2014_x86_64 --implementation cp --only-binary=:all: --upgrade --target /pip cryptography==37.0.4
-
+python3.13 -m pip install --upgrade pip
+pip3.13 install --requirement requirements.txt --target /pip
+python3.13 -m pip install --platform manylinux2014_x86_64 --implementation cp --only-binary=:all: --upgrade --target /pip cryptography==37.0.4
 
 cd /pip
 rm -r *.dist-info
 find . -name __pycache__ | xargs rm -r
 
-mv _cffi_backend.cpython-311-x86_64-linux-gnu.so _cffi_backend.so
+mv _cffi_backend.cpython-313-x86_64-linux-gnu.so _cffi_backend.so
 cd cryptography/hazmat/bindings
 mv _openssl.abi3.so _openssl.so
 
