@@ -10,7 +10,7 @@ permissions:
   contents: write
 jobs:
   test:
-    uses: nationalarchives/tdr-github-actions/.github/workflows/tdr_test.yml@13faff54c193651ee30482ebdf01e083c8b14203 # v0.0.17
+    uses: nationalarchives/tdr-github-actions/.github/workflows/tdr_test.yml@2d29c2e83fbaba6554c1e0d8c0b45d2015d610b2 # v0.0.41
     with:
       repo-name: tdr-signed-cookies
       test-command: |
