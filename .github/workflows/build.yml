@@ -4,8 +4,13 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: read
 jobs:
   pre-deploy:
+    permissions:
+      contents: write
+      id-token: write
     uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@2d29c2e83fbaba6554c1e0d8c0b45d2015d610b2 # v0.0.41
     with:
       repo-name: tdr-signed-cookies
@@ -29,6 +34,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - run: gh workflow run deploy.yml -f environment=intg -f to-deploy=${{ needs.pre-deploy.outputs.next-version }}
+        with:
+          persist-credentials: true
+      - run: gh workflow run deploy.yml -f environment=intg -f to-deploy=${NEXT_VERSION}
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
+          NEXT_VERSION: ${{ needs.pre-deploy.outputs.next-version }}
