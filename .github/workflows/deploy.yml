@@ -23,7 +23,7 @@ permissions:
   contents: write
 jobs:
   deploy:
-    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_deploy.yml@f563794aa48b4ea16cae01caf704aa241a37539f # v0.0.48
+    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_deploy.yml@5a96b84cf82bce1371168cc31cb89f88cad86763 # v0.0.53
     with:
       lambda-name: signed-cookies
       deployment-package: function.zip
